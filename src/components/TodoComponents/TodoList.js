@@ -6,9 +6,15 @@ import Todo from './Todo'
 const TodoList = (props) => {
   return(
     <div>
-      {props.todoItems.map(el => {
+      {props.todoItems.map(item => {
         return (
-          <Todo todoItem= {el} />
+          <Todo
+            editButton={() => props.editButton(item.id)}
+            editChange={props.editChange}
+            markComplete={() => props.markComplete(item.id)}
+            editItem={() => props.editItem(item.id)}
+            todoItem={item} 
+          />
         )
       })}
     </div>

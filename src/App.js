@@ -1,42 +1,128 @@
 import React from 'react';
-import Todo from './components/TodoComponents/Todo'
+import './components/TodoComponents/Todo.css';
 import TodoForm from './components/TodoComponents/TodoForm'
 import TodoList from './components/TodoComponents/TodoList'
-
-
-const taskData = [
-  {
-    task: 'Organize Garage',
-    id: 1528817077286,
-    completed: false
-  },
-  {
-    task: 'Bake Cookies',
-    id: 1528817084358,
-    completed: false
-  }
-]
-
 
 class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      todoItems: taskData,
+      todoItems: [
+        {
+          task: 'Organize Garage',
+          id: 1528817077286,
+          completed: false,
+          editActive: false
+        },
+        {
+          task: 'Bake Cookies',
+          id: 1528817084358,
+          completed: false,
+          editActive: false
+        }
+      ],
       formValue: "",
+      editValue: "",
+      style: {textDecoration: "line-through"}
     };
   }
-  // you will need a place to store your state in this component.
-  // design `App` to be the parent component of your application.
-  // this component is going to take care of state, and any change handlers you need to work with your state
+
+  submitButton = ev => {
+    ev.preventDefault();
+    this.submitForm();
+  }
+
+  submitForm = () => {
+    if (this.state.formValue === "") {return}
+    const newItem = {
+      task: this.state.formValue,
+      id: Date.now(),
+      completed: false,
+      editActive: false
+    }
+    this.setState({
+      todoItems: [
+        ...this.state.todoItems,
+        newItem
+      ],
+      formValue: ""
+    })
+  }
   
-  
+  formChange = ev => {
+    this.setState({
+      [ev.target.name]: ev.target.value
+    })
+  }
+
+  formKeyDown = ev => {
+    if (ev.keyCode === 13) {
+      this.submitForm()
+    }
+  }
+
+  markComplete = id => {
+    this.setState({
+      todoItems: this.state.todoItems.map(el => {
+        if (id === el.id) {el.completed = !el.completed}
+        return el;
+      })
+    })
+  }
+
+  editButton = id => {
+    this.setState({
+      todoItems: this.state.todoItems.map(el => {
+        if (id === el.id) {el.editActive = !el.editActive}
+        return el;
+      })
+    })
+  }
+
+  selectAllButton = ev => {
+    ev.preventDefault();
+
+    let allTrueCheck = [];
+    allTrueCheck = this.state.todoItems.filter((el) => {
+      return (el.completed === false)
+    })
+    console.log(allTrueCheck);
+    
+    this.setState({
+      todoItems: this.state.todoItems.map(el => {
+        el.completed = (allTrueCheck.length !== 0);
+        return el;
+      })
+    })
+  }
+
+  clearButton = ev => {
+    ev.preventDefault()
+    console.log(this.state.todoItems)
+    this.setState({
+      todoItems: this.state.todoItems.filter(el => {
+        return (el.completed === false)
+      })
+    })
+  }
 
   render() {
     return (
       <div>
-        <TodoList todoItems={this.state.todoItems}/>
-        <TodoForm formValue={this.state.formValue}/>
+        <TodoList
+          markComplete={this.markComplete}
+          editChange={this.formChange}
+          editButton={this.editButton}
+          todoItems={this.state.todoItems}
+        />
+        <TodoForm
+          formKeyDown={this.formKeyDown}
+          formChange={this.formChange}
+          formValue={this.state.formValue}
+          submitButton={this.submitButton}
+          clearButton={this.clearButton}
+          selectAllButton={this.selectAllButton}
+        />
       </div>
     );
   }
