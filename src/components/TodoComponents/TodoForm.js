@@ -3,9 +3,10 @@ import './Todo.css'
 
 const TodoForm = (props) => {
   return(
-    <div>
+    <div className="todo-form">
       <input 
         name="formValue" 
+        className="input-field"
         type="text" 
         placeholder="...todo" 
         value={props.formValue}

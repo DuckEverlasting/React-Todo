@@ -1,7 +1,37 @@
-.todo-item {
+.list-container {
+  border: 2px solid black;
+  border-radius: 5px;
+  background: rgb(200, 236, 225);
+  max-width: 550px;
+  margin: 0 auto;
+  padding: 20px 0;
+}
+
+h1 {
+  text-align: center;
+  margin: 0px;
+}
+
+button {
+  border-radius: 20px;
+  background: rgb(238, 238, 238);
+  user-select: none;
+}
+
+button:focus {
+  outline:0;
+}
+
+.todo-item-div .todo-item {
+  display: none;
+  width: auto;
+  margin: 5px;
   cursor: pointer;
   user-select: none;
-  position: relative;
+}
+
+.todo-item-div .todo-item.visible {
+  display: inline-block;
 }
 
 .selected {
@@ -9,16 +39,39 @@
 }
 
 .todo-item-div {
+  border-top: 2px solid blue;
+  background: rgb(228, 228, 255);
+  padding: 5px 0;
   display: flex;
   align-items: center;
+  font-weight: bold;
+}
+
+.todo-item-div:last-child {
+  border-bottom: 2px solid blue;
 }
 
 .todo-item-div .edit-field {
-  position: absolute;
   display: none;
+  padding: 5px 0;
+  margin: 0 5px;
 }
 
 .todo-item-div .edit-field.visible {
-  position: absolute;
   display: inline-block;
+}
+
+.list-box {
+  margin-bottom: 20px;
+}
+
+.todo-form {
+  display: flex;
+  justify-content: space-around;
+  border-top: 3px solid black;
+  padding: 20px;
+}
+
+.input-field {
+  margin-right: 30px;
 }

@@ -5,7 +5,7 @@ import Todo from './Todo'
 
 const TodoList = (props) => {
   return(
-    <div>
+    <div className="list-box">
       {props.todoItems.map(item => {
         return (
           <Todo

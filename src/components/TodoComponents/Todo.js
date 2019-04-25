@@ -3,7 +3,11 @@ import './Todo.css'
 const Todo = (props) => {
 
   const listItemClassHandler = () => {
-    return (props.todoItem.completed ? "todo-item selected" : "todo-item")
+    return (
+      (props.todoItem.completed ? "todo-item selected" : "todo-item")
+       + 
+      (props.todoItem.editActive ? "" : " visible")
+    )
   }
 
   const editFieldClassHandler = () => {
@@ -16,16 +20,15 @@ const Todo = (props) => {
         className={listItemClassHandler()}
         onClick={props.markComplete}
       >
-        <input
+        {props.todoItem.task}
+      </p>
+      <input
           className={editFieldClassHandler()}
           size={props.todoItem.task.length}
           type="text"
           placeholder={props.todoItem.task}
           onChange={props.editChange}
-        />
-        {props.todoItem.task}
-      </p>
-
+      />
       <button
         onClick={props.editButton}
       >

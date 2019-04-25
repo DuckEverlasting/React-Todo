@@ -108,7 +108,8 @@ class App extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="list-container">
+        <h1>To Do List</h1>
         <TodoList
           markComplete={this.markComplete}
           editChange={this.formChange}
