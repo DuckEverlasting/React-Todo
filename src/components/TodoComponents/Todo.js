@@ -23,10 +23,11 @@ const Todo = (props) => {
         {props.todoItem.task}
       </p>
       <input
+          name={props.editName}
           className={editFieldClassHandler()}
           size={props.todoItem.task.length}
           type="text"
-          placeholder={props.todoItem.task}
+          value={props.todoItem.task}
           onChange={props.editChange}
       />
       <button

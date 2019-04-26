@@ -12,17 +12,16 @@ class App extends React.Component {
           task: 'Organize Garage',
           id: 1528817077286,
           completed: false,
-          editActive: false
+          editActive: false,
         },
         {
           task: 'Bake Cookies',
           id: 1528817084358,
           completed: false,
-          editActive: false
+          editActive: false,
         }
       ],
-      formValue: "",
-      editValue: "",
+      formValue: '',
       style: {textDecoration: "line-through"}
     };
   }
@@ -45,13 +44,26 @@ class App extends React.Component {
         ...this.state.todoItems,
         newItem
       ],
-      formValue: ""
+      formValue: "",
     })
   }
   
   formChange = ev => {
     this.setState({
       [ev.target.name]: ev.target.value
+    })
+  }
+
+  editChange = ev => {
+    const newValueId = [ev.target.name]
+    const newValue = ev.target.value;
+    this.setState({
+      todoItems: this.state.todoItems.map(el => {
+        if (el.id == newValueId) {
+          el.task = newValue;
+        }
+        return el;
+      })
     })
   }
 
@@ -73,7 +85,9 @@ class App extends React.Component {
   editButton = id => {
     this.setState({
       todoItems: this.state.todoItems.map(el => {
-        if (id === el.id) {el.editActive = !el.editActive}
+        if (id === el.id) {
+          el.editActive = !el.editActive
+        }
         return el;
       })
     })
@@ -86,7 +100,6 @@ class App extends React.Component {
     allTrueCheck = this.state.todoItems.filter((el) => {
       return (el.completed === false)
     })
-    console.log(allTrueCheck);
     
     this.setState({
       todoItems: this.state.todoItems.map(el => {
@@ -98,11 +111,10 @@ class App extends React.Component {
 
   clearButton = ev => {
     ev.preventDefault()
-    console.log(this.state.todoItems)
     this.setState({
       todoItems: this.state.todoItems.filter(el => {
         return (el.completed === false)
-      })
+      }),
     })
   }
 
@@ -112,8 +124,8 @@ class App extends React.Component {
         <h1>To Do List</h1>
         <TodoList
           markComplete={this.markComplete}
-          editChange={this.formChange}
           editButton={this.editButton}
+          editChange={this.editChange}
           todoItems={this.state.todoItems}
         />
         <TodoForm
